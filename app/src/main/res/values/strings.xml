@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">EntrenadorRCP</string>
+    <string name="mtu_space">Ajustando la UMT...</string>
 </resources>
