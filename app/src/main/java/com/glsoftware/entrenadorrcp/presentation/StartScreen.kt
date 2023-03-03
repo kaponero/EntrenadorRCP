@@ -51,22 +51,13 @@ fun StartScreen(navController: NavController,onBluetoothStateChanged:()->Unit){
         prefs.saveTiempo(tiempo.minutos,tiempo.segundos)
         prefs.saveScores(scores.cpm,scores.desplaza,scores.posicion, scores.contador, scores.cantidad)
     }
+
     var dividendo = scores.contador
     if (dividendo == 0){
         dividendo = 1
     }
-    val desvio = sqrt(((scores.cpm.toFloat()/scores.cantidad)-110).pow(2))
 
-    val punta_cmp = 100-desvio.toInt()
-
-    var puntaje = ((punta_cmp)*.5 + (((scores.desplaza.toFloat())/dividendo)*2)*.2 + ((scores.posicion.toFloat())/(60*tiempo.minutos + tiempo.segundos)*100)*.3).toInt()
-
-    if (puntaje < 0){
-        puntaje=0
-    }
-    else if (puntaje>100){
-        puntaje=100
-    }
+    var puntaje = calcular_puntuacion(dividendo)
 
     Column (modifier = Modifier.fillMaxSize()) {
         Box(
@@ -311,6 +302,23 @@ fun CircularIndicator(
         }
 
     }
+}
+@Composable
+fun calcular_puntuacion(div:Int): Int {
+
+    val desvio = sqrt(((scores.cpm.toFloat()/scores.cantidad)-110).pow(2))
+
+    val punta_cmp = 100-desvio.toInt()
+
+    var puntuacion = ((punta_cmp)*.5 + (((scores.desplaza.toFloat())/div)*2)*.2 + ((scores.posicion.toFloat())/(60*tiempo.minutos + tiempo.segundos)*100)*.3).toInt()
+
+    if (puntuacion < 0){
+        puntuacion=0
+    }
+    else if (puntuacion>100){
+        puntuacion=100
+    }
+    return puntuacion
 }
 
 @Preview(showBackground = true)

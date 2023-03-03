@@ -16,6 +16,7 @@ import androidx.compose.ui.graphics.toArgb
 import com.glsoftware.entrenadorrcp.presentation.MainScreen
 import com.glsoftware.entrenadorrcp.presentation.NavSplash
 import com.glsoftware.entrenadorrcp.presentation.Navigation
+import com.glsoftware.entrenadorrcp.presentation.Screen
 import com.glsoftware.entrenadorrcp.presentation.ScreenElements.Prefs
 import com.glsoftware.entrenadorrcp.ui.theme.EntrenadorRCPTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -31,6 +32,8 @@ class MainActivity : ComponentActivity() {
         lateinit var prefs: Prefs
     }
 
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -45,7 +48,9 @@ class MainActivity : ComponentActivity() {
                 )
             }
         }
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
+
+        //setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
+
     }
 
     override fun onStart() {
