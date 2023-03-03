@@ -59,7 +59,14 @@ fun StartScreen(navController: NavController,onBluetoothStateChanged:()->Unit){
 
     val punta_cmp = 100-desvio.toInt()
 
-    val puntaje = ((punta_cmp)*.5 + (((scores.desplaza.toFloat())/dividendo)*2)*.2 + ((scores.posicion.toFloat())/(60*tiempo.minutos + tiempo.segundos)*100)*.3).toInt()
+    var puntaje = ((punta_cmp)*.5 + (((scores.desplaza.toFloat())/dividendo)*2)*.2 + ((scores.posicion.toFloat())/(60*tiempo.minutos + tiempo.segundos)*100)*.3).toInt()
+
+    if (puntaje < 0){
+        puntaje=0
+    }
+    else if (puntaje>100){
+        puntaje=100
+    }
 
     Column (modifier = Modifier.fillMaxSize()) {
         Box(
