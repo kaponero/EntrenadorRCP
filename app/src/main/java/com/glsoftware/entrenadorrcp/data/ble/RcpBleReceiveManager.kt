@@ -30,6 +30,7 @@ class RcpBleReceiveManager @Inject constructor(
 
     override val data: MutableSharedFlow<Resource<RcpResult>> = MutableSharedFlow()
 
+
     private val bleScanner by lazy {
         bluetoothAdapter.bluetoothLeScanner
     }

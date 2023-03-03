@@ -78,8 +78,10 @@ fun StartScreen(navController: NavController,onBluetoothStateChanged:()->Unit){
                     text = "Puntuación",
                     fontSize = 25.sp,
                     modifier = Modifier
-                        .padding(15.dp),)
-
+                        .padding(15.dp),
+                    color = white_color
+                    )
+                Spacer(modifier = Modifier.height(50.dp))
                 CircularIndicator(
                     modifier = Modifier
                         .size(150.dp),
@@ -120,7 +122,7 @@ fun StartScreen(navController: NavController,onBluetoothStateChanged:()->Unit){
                 Column() {
                     Text(text = "Tiempo.",
                         textAlign = TextAlign.Center,
-                        color= gray,
+                        //color= gray,
                         fontSize = 10.sp)
                     Image(
                         painter = painterResource(id = R.drawable.timelapse),
@@ -142,7 +144,7 @@ fun StartScreen(navController: NavController,onBluetoothStateChanged:()->Unit){
                 }
                 } minutos",
                     textAlign = TextAlign.Center,
-                    color= black,
+                    //color= black,
                     fontSize = 20.sp
                 )
             }
@@ -164,7 +166,7 @@ fun StartScreen(navController: NavController,onBluetoothStateChanged:()->Unit){
                 ) {
                     Text(text = "Comp. por Min.",
                         textAlign = TextAlign.Center,
-                        color= gray,
+                        //color= gray,
                         fontSize = 10.sp)
                     Image(
                         painter = painterResource(id = R.drawable.lat_minute),
@@ -173,7 +175,7 @@ fun StartScreen(navController: NavController,onBluetoothStateChanged:()->Unit){
                     Text(text = "${(scores.cpm.toFloat()/scores.cantidad).roundToInt()}",
                         //text = "${((scores.cpm.toFloat())/(60*tiempo.minutos + tiempo.segundos)*100).roundToInt()}%",
                         textAlign = TextAlign.Center,
-                        color= black,
+                        //color= black,
                     )
                 }
 
@@ -182,7 +184,7 @@ fun StartScreen(navController: NavController,onBluetoothStateChanged:()->Unit){
                 {
                     Text(text = "Posición",
                         textAlign = TextAlign.Center,
-                        color= gray,
+                        //color= gray,
                         fontSize = 10.sp)
                     Image(
                         painter = painterResource(id = R.drawable.hand_pos),
@@ -191,7 +193,8 @@ fun StartScreen(navController: NavController,onBluetoothStateChanged:()->Unit){
                     )
                     Text(text = "${((scores.posicion.toFloat())/(60*tiempo.minutos + tiempo.segundos)*100).roundToInt()}%",
                         textAlign = TextAlign.Center,
-                        color= black)
+                        //color= black
+                    )
                 }
 
                 Column(
@@ -199,7 +202,7 @@ fun StartScreen(navController: NavController,onBluetoothStateChanged:()->Unit){
                 ) {
                     Text(text = "Desplazamiento",
                         textAlign = TextAlign.Center,
-                        color= gray,
+                        //color= gray,
                         fontSize = 10.sp)
                     Image(
                         painter = painterResource(id = R.drawable.compresion),
@@ -210,7 +213,8 @@ fun StartScreen(navController: NavController,onBluetoothStateChanged:()->Unit){
                     )
                     Text(text = "${(((scores.desplaza.toFloat())/dividendo)*2).roundToInt()}%",
                         textAlign = TextAlign.Center,
-                        color= black)
+                        //color= black
+                    )
                 }
             }
         }

@@ -54,6 +54,7 @@ fun AboutScreen(navController: NavController,
                     fontSize = 25.sp,
                     modifier = Modifier
                         .padding(15.dp),
+                    color = white_color
                 )
             }
         }
@@ -100,7 +101,7 @@ fun AboutScreen(navController: NavController,
                             text = "Para mejorar la maniobra de RCP las compresiones por minuto debe mantenerlas " +
                                     "entre 100 y 120 (zona verde) en todo el entrenamiento",
                             textAlign = TextAlign.Center,
-                            color = gray,
+                            //color = gray,
                             fontSize = 15.sp
                         )
                     }
@@ -120,7 +121,7 @@ fun AboutScreen(navController: NavController,
                             text = "La barra deslizante de la compresion del torax debe llegar hasta los extremos superior" +
                                     " e inferior para una correcto maniobra",
                             textAlign = TextAlign.Center,
-                            color = gray,
+                            //color = gray,
                             fontSize = 15.sp
                         )
                     }
@@ -148,7 +149,7 @@ fun AboutScreen(navController: NavController,
                             text = "Cuando el icono este en verde significa que la posicion de las" +
                                     " manos es correcta",
                             textAlign = TextAlign.Center,
-                            color = gray,
+                            //color = gray,
                             fontSize = 15.sp
                         )
                     }
@@ -171,7 +172,7 @@ fun AboutScreen(navController: NavController,
                     text = "Realizado por Labanca Alvaro y García Sebastian como Proyecto Final para la carrera"+
                             " Bioingeniería",
                     textAlign = TextAlign.Center,
-                    color = blueGray,
+                    //color = blueGray,
                     fontSize = 14.sp
                 )
 

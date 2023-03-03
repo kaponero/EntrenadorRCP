@@ -121,7 +121,8 @@ fun RcpScreen(navController: NavController,
                     )
                     if(viewModel.initializingMessage != null){
                         Text(
-                            text = viewModel.initializingMessage!!
+                            text = viewModel.initializingMessage!!,
+                            color = white_color
                         )
                     }
                 }
@@ -130,7 +131,8 @@ fun RcpScreen(navController: NavController,
                     text = "Vaya a la configuración de la aplicación y permita los permisos que faltan.",
                     style = MaterialTheme.typography.body2,
                     modifier = Modifier.padding(10.dp),
-                    textAlign = TextAlign.Center
+                    textAlign = TextAlign.Center,
+                    color = white_color
                 )
             }else if(viewModel.errorMessage != null){
                 Column(
@@ -149,130 +151,138 @@ fun RcpScreen(navController: NavController,
                         }
                     ) {
                         Text(
-                            "Intentar nuevamente"
+                            text = "Intentar nuevamente",
+                            style = MaterialTheme.typography.body2,
+                            modifier = Modifier.padding(10.dp),
+                            textAlign = TextAlign.Center,
+                            color = white_color
                         )
                     }
                 }
-            }else if(bleConnectionState == ConnectionState.Connected){
+            //}else if(bleConnectionState == ConnectionState.Connected){
+            }else {
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(0.dp, 15.dp),
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Top
-                ){
+                ) {
                     val refresco = viewModel.refresco
-                    rememberCountdownTimerState(viewModel.frequency,viewModel.compresion,viewModel.position)
+                    rememberCountdownTimerState(viewModel.frequency, viewModel.compresion, viewModel.position)
                     //calculo_frecuencia(viewModel.frequency)
                     Text(
-                        text = "${if(tiempo.minutos>9){
-                            tiempo.minutos
-                        }
-                        else{
-                            "0" +tiempo.minutos
-                        }
-                        } : ${if(tiempo.segundos>9){
-                            tiempo.segundos
-                        }
-                        else{
-                            "0" +tiempo.segundos
-                        }
-                        }" ,
+                        text = "${
+                            if (tiempo.minutos > 9) {
+                                tiempo.minutos
+                            } else {
+                                "0" + tiempo.minutos
+                            }
+                        } : ${
+                            if (tiempo.segundos > 9) {
+                                tiempo.segundos
+                            } else {
+                                "0" + tiempo.segundos
+                            }
+                        }",
                         style = MaterialTheme.typography.h6,
-                        color = Color.White,
-                        fontSize = 40.sp
+                        fontSize = 40.sp,
+                        color = white_color
                     )
-                    Spacer(modifier = Modifier.height(10.dp))
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically
-                    ){
-                        Column(
-                            modifier = Modifier
-                                .weight(2f),
-                            horizontalAlignment = Alignment.CenterHorizontally,
+                    if(bleConnectionState == ConnectionState.Connected) {
+                        Spacer(modifier = Modifier.height(10.dp))
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Column(
+                                modifier = Modifier
+                                    .weight(2f),
+                                horizontalAlignment = Alignment.CenterHorizontally,
 
+                                ) {
+                                Spacer(modifier = Modifier.height(30.dp))
+                                ArcIndicator(
+                                    modifier = Modifier
+                                        .size(250.dp),
+                                    initialValue = viewModel.frequency,
+                                    primaryColor = white,
+                                    secondaryColor = Red200,
+                                    terciaryColor = Red700,
+                                    circleRadius = 230f
+                                )
+                            }
+                            Column(
+                                modifier = Modifier
+                                    .weight(1f),
+                                horizontalAlignment = Alignment.CenterHorizontally
                             ) {
-                            Spacer(modifier = Modifier.height(30.dp))
-                            ArcIndicator(
+                                BarIndicator(
+                                    modifier = Modifier
+                                        .size(250.dp),
+                                    initialValue = viewModel.compresion,
+                                    primaryColor = white,
+                                    secondaryColor = Red200,
+                                    terciaryColor = Red700,
+                                    circleRadius = 230f
+                                )
+                            }
+                        }
+                        Spacer(modifier = Modifier.height(10.dp))
+
+                        if (viewModel.position == 1) {
+                            Image(
+                                painter = painterResource(id = R.drawable.hand_ok),
+                                contentDescription = "mano ok",
                                 modifier = Modifier
-                                    .size(250.dp),
-                                initialValue = viewModel.frequency,
-                                primaryColor = white,
-                                secondaryColor = Red200,
-                                terciaryColor = Red700,
-                                circleRadius = 230f
+                                    .size(80.dp)
+                                    .border(
+                                        BorderStroke(4.dp, white),
+                                        CircleShape
+                                    )
+                                    .padding(10.dp)
+                            )
+                        } else {
+                            Image(
+                                painter = painterResource(id = R.drawable.hand_no),
+                                contentDescription = "mano no",
+                                modifier = Modifier
+                                    .size(80.dp)
+                                    .border(
+                                        BorderStroke(4.dp, white),
+                                        CircleShape
+                                    )
+                                    .padding(10.dp)
                             )
                         }
-                        Column(
-                            modifier = Modifier
-                                .weight(1f),
-                            horizontalAlignment = Alignment.CenterHorizontally
-                        ){
-                            BarIndicator(
-                                modifier = Modifier
-                                    .size(250.dp),
-                                initialValue = viewModel.compresion,
-                                primaryColor = white,
-                                secondaryColor = Red200 ,
-                                terciaryColor = Red700,
-                                circleRadius = 230f
-                            )
-                        }
-                    }
-                    Spacer(modifier = Modifier.height(10.dp))
-
-                    if(viewModel.position == 1 ){
-                        Image(
-                            painter = painterResource(id = R.drawable.hand_ok),
-                            contentDescription = "mano ok",
-                            modifier = Modifier
-                                .size(80.dp)
-                                .border(
-                                    BorderStroke(4.dp, white),
-                                    CircleShape
-                                )
-                                .padding(10.dp)
-                        )
-                    }else{
-                        Image(
-                            painter = painterResource(id = R.drawable.hand_no),
-                            contentDescription = "mano no",
-                            modifier = Modifier
-                                .size(80.dp)
-                                .border(
-                                    BorderStroke(4.dp, white),
-                                    CircleShape
-                                )
-                                .padding(10.dp)
-                        )}
-                    calculo_desplazamiento(viewModel.compresion)
-                    Spacer(modifier = Modifier.height(80.dp))
-                    Row() {
-                        Button(onClick = {
-                            reset_tiempo()
-                            reset_scores()
-                        }) {
-                            Text("Reiniciar")
-                        }
-                        Spacer(modifier = Modifier.width(20.dp))
-                        Button(onClick = {
-                            if (bleConnectionState == ConnectionState.Connected){
-                                viewModel.disconnect()
+                        calculo_desplazamiento(viewModel.compresion)
+                        Spacer(modifier = Modifier.height(80.dp))
+                        Row() {
+                            /*Button(onClick = {
+                                reset_tiempo()
+                                reset_scores()
+                            }) {
+                                Text("Reiniciar")
                             }
-                            navController.popBackStack()
-                            navController.navigate(Screen.StartScreen.route) {
-                                //popUpTo(Screen.FrequencyScreen.route)
+                            Spacer(modifier = Modifier.width(20.dp))*/
+                            Button(onClick = {
+                                if (bleConnectionState == ConnectionState.Connected) {
+                                    viewModel.disconnect()
+                                }
+                                navController.popBackStack()
+                                navController.navigate(Screen.StartScreen.route) {
+                                    //popUpTo(Screen.FrequencyScreen.route)
+                                }
+                            }) {
+                                Text("Terminar")
                             }
-                        }) {
-                            Text("Terminar")
+                        }
+                        if (tiempo.minutos * 60 + tiempo.segundos == 600) {
+                            navController.navigate(Screen.StartScreen.route)
                         }
                     }
-                    if (tiempo.minutos*60+tiempo.segundos==600){
-                        navController.navigate(Screen.StartScreen.route)
-                    }
-
                 }
-            }else if(bleConnectionState == ConnectionState.Disconnected){
+            }
+             if (bleConnectionState == ConnectionState.Disconnected){
                 Button(onClick = {
                     viewModel.initializeConnection()
                 }) {

@@ -23,7 +23,7 @@ fun rememberCountdownTimerState(
             tiempo.segundos +=1
             if (tiempo.segundos == 60){
                 tiempo.segundos = 0
-                tiempo.minutos+=1
+                tiempo.minutos += 1
             }
             if (pos_value==1){
                 scores.posicion+=1
@@ -33,7 +33,7 @@ fun rememberCountdownTimerState(
     }
     scores.cpm += cpm_value
     scores.cantidad ++
-    Log.d("score",(scores.cpm.toFloat()/scores.cantidad.toFloat()).toString())
+    //Log.d("score",(scores.cpm.toFloat()/scores.cantidad.toFloat()).toString())
 
     return tiempo
 }
