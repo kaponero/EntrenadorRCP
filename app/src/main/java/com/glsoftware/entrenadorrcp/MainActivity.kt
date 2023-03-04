@@ -19,6 +19,7 @@ import com.glsoftware.entrenadorrcp.presentation.Navigation
 import com.glsoftware.entrenadorrcp.presentation.Screen
 import com.glsoftware.entrenadorrcp.presentation.ScreenElements.Prefs
 import com.glsoftware.entrenadorrcp.ui.theme.EntrenadorRCPTheme
+import com.glsoftware.entrenadorrcp.ui.theme.rememberWindowSizeClass
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -39,7 +40,8 @@ class MainActivity : ComponentActivity() {
 
         prefs = Prefs(this)
         setContent {
-            EntrenadorRCPTheme {
+            val window = rememberWindowSizeClass()
+            EntrenadorRCPTheme(window) {
                 //window?.statusBarColor = Color.Gray.toArgb()
                 Navigation(
                     onBluetoothStateChanged = {

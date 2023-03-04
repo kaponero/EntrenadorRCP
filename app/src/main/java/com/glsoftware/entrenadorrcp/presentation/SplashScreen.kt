@@ -2,6 +2,7 @@ package com.glsoftware.entrenadorrcp.presentation
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -17,6 +18,8 @@ import com.glsoftware.entrenadorrcp.MainActivity.Companion.prefs
 import com.glsoftware.entrenadorrcp.R
 import com.glsoftware.entrenadorrcp.presentation.ScreenElements.scores
 import com.glsoftware.entrenadorrcp.presentation.ScreenElements.tiempo
+import com.glsoftware.entrenadorrcp.ui.theme.AppTheme
+import com.glsoftware.entrenadorrcp.ui.theme.Orientation
 import kotlinx.coroutines.delay
 
 @Composable
@@ -42,36 +45,68 @@ fun SplashScreen(navController: NavController){
 
 @Composable
 fun Logos(){
-
-    Column(
-        modifier = Modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.SpaceAround
-    ){
-        //Spacer(modifier = Modifier.height(40.dp))
-        Image(
-            painter = painterResource(id = R.drawable.logo_ingenieria),
-            contentDescription = "Logo Engineering",
-            modifier = Modifier
-                .scale(0.7f)
-        )
+    if(AppTheme.orientation == Orientation.Portrait) {
         Column(
+            modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.SpaceAround
         ) {
+            //Spacer(modifier = Modifier.height(40.dp))
             Image(
-                painter = painterResource(id = R.drawable.iconohd),
-                contentDescription = "Logo App",
+                painter = painterResource(id = R.drawable.logo_ingenieria),
+                contentDescription = "Logo Engineering",
+                modifier = Modifier
+                    .scale(0.7f)
             )
-            Text(
-                text = "EntrenadorRCP",
-                fontSize = 18.sp,
-                color = Color.Black
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
+                Image(
+                    painter = painterResource(id = R.drawable.iconohd),
+                    contentDescription = "Logo App",
+                )
+                Text(
+                    text = "EntrenadorRCP",
+                    style = MaterialTheme.typography.body1,
+                    color = Color.Black
+                )
+            }
+            Image(
+                painter = painterResource(id = R.drawable.glslogohd),
+                contentDescription = "Logo GLS",
             )
         }
-        Image(
-            painter = painterResource(id = R.drawable.glslogohd),
-            contentDescription = "Logo GLS",
-        )
+    }else{
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            //Spacer(modifier = Modifier.height(40.dp))
+            Image(
+                painter = painterResource(id = R.drawable.logo_ingenieria),
+                contentDescription = "Logo Engineering",
+                modifier = Modifier
+                    .scale(0.7f)
+            )
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
+                Image(
+                    painter = painterResource(id = R.drawable.iconohd),
+                    contentDescription = "Logo App",
+                )
+                Text(
+                    text = "EntrenadorRCP",
+                    style = MaterialTheme.typography.body2,
+                    color = Color.Black,
+                )
+            }
+            Image(
+                painter = painterResource(id = R.drawable.glslogohd),
+                contentDescription = "Logo GLS",
+            )
+        }
     }
 }
 

@@ -12,6 +12,7 @@ import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -40,7 +41,12 @@ fun AboutScreen(navController: NavController,
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .background(Red500)
+                .background(brush = Brush.verticalGradient(
+                    listOf(
+                        Red500.copy(1f),
+                        white.copy(0.15f)
+                    )
+                ))
                 .weight(1f)
         ) {
             Column(
@@ -50,10 +56,10 @@ fun AboutScreen(navController: NavController,
 
                 ) {
                 Text(
-                    text = "Entrenador RCP",
-                    fontSize = 25.sp,
+                    text = "EntrenadorRCP",
+                    style = MaterialTheme.typography.h1,
                     modifier = Modifier
-                        .padding(15.dp),
+                        .padding(AppTheme.dimens.large),
                     color = white_color
                 )
             }
@@ -71,86 +77,98 @@ fun AboutScreen(navController: NavController,
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        Spacer(modifier = Modifier.height(50.dp))
+        Spacer(modifier = Modifier.height(AppTheme.dimens.large*4))
         Card(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(15.dp),
+                .padding(AppTheme.dimens.large),
             elevation = 10.dp,
 
             ) {
             Row(
                 modifier = Modifier
-                    .padding(15.dp),
+                    .padding(AppTheme.dimens.medium),
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceEvenly
             ) {
                 Column() {
-                    Row() {
+                    Row(
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
                         ArcIndicator(
                             modifier = Modifier
                                 .background(gray)
-                                .size(100.dp),
+                                .size(AppTheme.dimens.radio2)
+                                .padding(AppTheme.dimens.medium),
                             initialValue = 110,
                             primaryColor = white,
                             secondaryColor = Red200,
                             terciaryColor = Red700,
-                            circleRadius = 92f
+                            circleRadius = AppTheme.dimens.radio2f
                         )
                         Text(
-                            text = "Para mejorar la maniobra de RCP las compresiones por minuto debe mantenerlas " +
+                            modifier = Modifier
+                                .padding(AppTheme.dimens.medium),
+                            text = "Para mejorar la maniobra de RCP las compresiones por minuto se deben mantener " +
                                     "entre 100 y 120 (zona verde) en todo el entrenamiento",
-                            textAlign = TextAlign.Center,
-                            //color = gray,
-                            fontSize = 15.sp
+                            textAlign = TextAlign.Justify,
+                            style = MaterialTheme.typography.body1
                         )
                     }
-                    Spacer(modifier = Modifier.height(15.dp))
-                    Row() {
+                    Spacer(modifier = Modifier.height(AppTheme.dimens.medium))
+                    Row(
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
                         BarIndicator(
                             modifier = Modifier
                                 .background(gray)
-                                .size(100.dp),
+                                .size(AppTheme.dimens.radio2)
+                                .padding(AppTheme.dimens.medium),
                             initialValue = 50,
                             primaryColor = white,
                             secondaryColor = Red200,
                             terciaryColor = Red700,
-                            circleRadius = 92f
+                            circleRadius = AppTheme.dimens.radio2f
                         )
                         Text(
+                            modifier = Modifier.padding(AppTheme.dimens.mediumLarge),
                             text = "La barra deslizante de la compresion del torax debe llegar hasta los extremos superior" +
-                                    " e inferior para una correcto maniobra",
-                            textAlign = TextAlign.Center,
-                            //color = gray,
-                            fontSize = 15.sp
+                                    " e inferior para una correcta insuflación",
+                            textAlign = TextAlign.Justify,
+                            style = MaterialTheme.typography.body1
                         )
                     }
-                    Spacer(modifier = Modifier.height(15.dp))
-                    Row() {
+                    Spacer(modifier = Modifier.height(AppTheme.dimens.medium))
+                    Row(
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
                         Box(
                             modifier = Modifier
-                                .size(100.dp)
-                                .background(gray),
+                                .size(AppTheme.dimens.radio2)
+                                .background(gray)
+                                .padding(AppTheme.dimens.medium),
                             contentAlignment = Alignment.Center
                         ) {
                             Image(
                                 painter = painterResource(id = R.drawable.hand_ok),
                                 contentDescription = "mano ok",
                                 modifier = Modifier
-                                    .size(40.dp)
+                                    .size(AppTheme.dimens.mano_size2)
                                     .border(
                                         BorderStroke(4.dp, white),
                                         CircleShape
                                     )
-                                    .padding(5.dp)
+                                    .padding(AppTheme.dimens.medium)
                             )
                         }
                         Text(
+                            modifier = Modifier.padding(AppTheme.dimens.medium),
                             text = "Cuando el icono este en verde significa que la posicion de las" +
                                     " manos es correcta",
-                            textAlign = TextAlign.Center,
-                            //color = gray,
-                            fontSize = 15.sp
+                            textAlign = TextAlign.Justify,
+                            style = MaterialTheme.typography.body1
                         )
                     }
                 }
@@ -159,8 +177,8 @@ fun AboutScreen(navController: NavController,
         Card(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(80.dp)
-                .padding(15.dp,5.dp),
+                .height(AppTheme.dimens.large*7)
+                .padding(AppTheme.dimens.large,AppTheme.dimens.medium),
             elevation = 10.dp,
         ) {
             Column(
@@ -169,15 +187,21 @@ fun AboutScreen(navController: NavController,
                 verticalArrangement = Arrangement.Center
             ) {
                 Text(
-                    text = "Realizado por Labanca Alvaro y García Sebastian como Proyecto Final para la carrera"+
-                            " Bioingeniería",
-                    textAlign = TextAlign.Center,
-                    //color = blueGray,
-                    fontSize = 14.sp
+                    modifier = Modifier.padding(AppTheme.dimens.medium),
+                    text = "EntrenadorRCP es una aplicación realizada por Labanca Alvaro y García Sebastián " +
+                            "como parte del Proyecto Final para la carrera Bioingeniería" ,
+                    textAlign = TextAlign.Justify,
+                    style = MaterialTheme.typography.body1
                 )
 
             }
         }
+        Text(
+            modifier = Modifier.padding(AppTheme.dimens.medium),
+            text = "Version 1.03 - 4-03-2023",
+            textAlign = TextAlign.Center,
+            style = MaterialTheme.typography.body1
+        )
     }
 
 }
