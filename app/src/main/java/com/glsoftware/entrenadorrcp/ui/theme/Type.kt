@@ -56,8 +56,13 @@ val typographySmall = Typography(
     h1 = TextStyle(
         fontFamily = QuickSand,
         fontWeight = FontWeight.Medium,
-        fontSize = 30.sp
+        fontSize = 35.sp
     ),
+    button = TextStyle(
+        fontFamily = QuickSand,
+        fontWeight = FontWeight.Medium,
+        fontSize = 18.sp
+    )
 )
 
 val typographyCompact = Typography(
@@ -99,8 +104,13 @@ val typographyCompact = Typography(
     h1 = TextStyle(
         fontFamily = QuickSand,
         fontWeight = FontWeight.Medium,
-        fontSize = 35.sp
+        fontSize = 40.sp
     ),
+    button = TextStyle(
+        fontFamily = QuickSand,
+        fontWeight = FontWeight.Medium,
+        fontSize = 21.sp
+    )
 )
 //tablet
 val typographyMedium = Typography(
@@ -142,8 +152,13 @@ val typographyMedium = Typography(
     h1 = TextStyle(
         fontFamily = QuickSand,
         fontWeight = FontWeight.Medium,
-        fontSize = 38.sp
+        fontSize = 43.sp
     ),
+    button = TextStyle(
+        fontFamily = QuickSand,
+        fontWeight = FontWeight.Medium,
+        fontSize = 24.sp
+    )
 )
 
 val typographyBig = Typography(
@@ -187,4 +202,9 @@ val typographyBig = Typography(
         fontWeight = FontWeight.Medium,
         fontSize = 50.sp
     ),
+    button = TextStyle(
+        fontFamily = QuickSand,
+        fontWeight = FontWeight.Medium,
+        fontSize = 32.sp
+    )
 )

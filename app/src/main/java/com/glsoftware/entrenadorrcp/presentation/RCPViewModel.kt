@@ -46,7 +46,6 @@ class RCPViewModel @Inject constructor(
                         frequency = result.data.frequency
                         compresion = result.data.compression
                         position = result.data.position
-                        refresco = result.data.refresh
                     }
 
                     is Resource.Loading -> {

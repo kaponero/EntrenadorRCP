@@ -124,6 +124,7 @@ fun RcpScreen(navController: NavController,
                             text = viewModel.initializingMessage!!,
                             color = white_color
                         )
+                        //timer()
                     }
                 }
             }else if(!permissionState.allPermissionsGranted){
@@ -168,27 +169,15 @@ fun RcpScreen(navController: NavController,
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Top
                 ) {
-                    val refresco = viewModel.refresco
-                    rememberCountdownTimerState(viewModel.frequency, viewModel.compresion, viewModel.position)
-                    //calculo_frecuencia(viewModel.frequency)
-                    Text(
-                        text = "${
-                            if (tiempo.minutos > 9) {
-                                tiempo.minutos
-                            } else {
-                                "0" + tiempo.minutos
-                            }
-                        } : ${
-                            if (tiempo.segundos > 9) {
-                                tiempo.segundos
-                            } else {
-                                "0" + tiempo.segundos
-                            }
-                        }",
-                        style = MaterialTheme.typography.h6,
-                        fontSize = 40.sp,
-                        color = white_color
-                    )
+                    //rememberCountdownTimerState(viewModel.frequency, viewModel.compresion, viewModel.position)
+
+                    //esta funcion muestra el contador en pantalla
+                    timer()
+                    //sumatoria de las compreciones por minuto
+                    calculo_frecuencia(viewModel.frequency)
+                    //calculo del dezplazamiento de insuflacion
+                    calculo_desplazamiento(viewModel.compresion)
+
                     if(bleConnectionState == ConnectionState.Connected) {
                         Spacer(modifier = Modifier.height(10.dp))
                         Row(
@@ -254,7 +243,7 @@ fun RcpScreen(navController: NavController,
                                     .padding(10.dp)
                             )
                         }
-                        calculo_desplazamiento(viewModel.compresion)
+                        //calculo_desplazamiento(viewModel.compresion)
                         Spacer(modifier = Modifier.height(80.dp))
                         Row() {
                             /*Button(onClick = {
@@ -273,7 +262,7 @@ fun RcpScreen(navController: NavController,
                                     //popUpTo(Screen.FrequencyScreen.route)
                                 }
                             }) {
-                                Text("Terminar")
+                                Text("Finalizar")
                             }
                         }
                         if (tiempo.minutos * 60 + tiempo.segundos == 600) {

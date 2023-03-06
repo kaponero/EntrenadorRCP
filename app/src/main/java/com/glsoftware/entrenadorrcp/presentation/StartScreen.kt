@@ -49,8 +49,6 @@ fun StartScreen(navController: NavController,onBluetoothStateChanged:()->Unit){
         }
     }
 
-    //MainScreen(navController,onBluetoothStateChanged)
-
     LaunchedEffect(false){
 
         prefs.saveTiempo(tiempo.minutos,tiempo.segundos)
@@ -62,7 +60,7 @@ fun StartScreen(navController: NavController,onBluetoothStateChanged:()->Unit){
         dividendo = 1
     }
 
-    var puntaje = calcular_puntuacion(dividendo)
+    var puntaje = 100//calcular_puntuacion(dividendo)
 
     if(AppTheme.orientation == Orientation.Portrait) {
         MainScreen(navController,onBluetoothStateChanged)
@@ -144,7 +142,6 @@ fun StartScreen(navController: NavController,onBluetoothStateChanged:()->Unit){
                         Image(
                             painter = painterResource(id = R.drawable.timelapse),
                             contentDescription = "tiempo de entrenamiento",
-                            //modifier = Modifier.padding(AppTheme.dimens.smallMedium, AppTheme.dimens.smallMedium)
                         )
                     }
                     Text(
@@ -193,7 +190,14 @@ fun StartScreen(navController: NavController,onBluetoothStateChanged:()->Unit){
                             modifier = Modifier.padding(AppTheme.dimens.medium, AppTheme.dimens.medium)
                         )
                         Text(
-                            text = "${(scores.cpm.toFloat() / scores.cantidad).roundToInt()}",
+                            text = "${
+                                if (scores.cantidad==0L) { 
+                                    0
+                                }
+                                else { 
+                                    (scores.cpm.toFloat()/scores.cantidad).roundToInt()
+                                }
+                            }",
                             //text = "${((scores.cpm.toFloat())/(60*tiempo.minutos + tiempo.segundos)*100).roundToInt()}%",
                             textAlign = TextAlign.Center,
                             style = MaterialTheme.typography.body2
@@ -216,7 +220,8 @@ fun StartScreen(navController: NavController,onBluetoothStateChanged:()->Unit){
                             modifier = Modifier.padding(AppTheme.dimens.medium, AppTheme.dimens.medium),
                         )
                         Text(
-                            text = "${((scores.posicion.toFloat()) / (60 * tiempo.minutos + tiempo.segundos) * 100).roundToInt()}%",
+                            //text = "${((scores.posicion.toFloat()) / (60 * tiempo.minutos + tiempo.segundos) * 100).roundToInt()}%",
+                            text = "10",
                             textAlign = TextAlign.Center,
                             style = MaterialTheme.typography.body2
                         )
@@ -238,7 +243,15 @@ fun StartScreen(navController: NavController,onBluetoothStateChanged:()->Unit){
                                 .padding(AppTheme.dimens.medium,AppTheme.dimens.medium)
                         )
                         Text(
-                            text = "${(((scores.desplaza.toFloat()) / dividendo) * 2).roundToInt()}%",
+                            //text = "${(((scores.desplaza.toFloat()) / dividendo) * 2).roundToInt()}%",
+                            text = "${
+                                if (scores.contador==0){
+                                    0
+                                }
+                                else{
+                                    (((scores.desplaza.toFloat()) / scores.contador) * 2).roundToInt()
+                                }
+                            }%",
                             textAlign = TextAlign.Center,
                             style = MaterialTheme.typography.body2
                         )
@@ -247,7 +260,7 @@ fun StartScreen(navController: NavController,onBluetoothStateChanged:()->Unit){
             }
         }
     }
-    else{
+    /*else{
         Column (modifier = Modifier.fillMaxSize()){
             Row(modifier = Modifier
                 .fillMaxSize()
@@ -328,8 +341,7 @@ fun StartScreen(navController: NavController,onBluetoothStateChanged:()->Unit){
                                 Spacer(modifier = Modifier.height(AppTheme.dimens.medium))
                                 Image(
                                     painter = painterResource(id = R.drawable.timelapse),
-                                    contentDescription = "tiempo de entrenamiento",
-                                    //modifier = Modifier.padding(AppTheme.dimens.smallMedium, AppTheme.dimens.smallMedium)
+                                    contentDescription = "tiempo de entrenamiento"
                                 )
                             }
                             Text(
@@ -435,6 +447,7 @@ fun StartScreen(navController: NavController,onBluetoothStateChanged:()->Unit){
             MainScreen(navController,onBluetoothStateChanged)
         }
     }
+    */
 }
 
 @Composable
@@ -518,7 +531,6 @@ fun CircularIndicator(
                 }
             }
         }
-
     }
 }
 @Composable

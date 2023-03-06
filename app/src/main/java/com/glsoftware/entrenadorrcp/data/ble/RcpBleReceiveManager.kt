@@ -74,7 +74,7 @@ class RcpBleReceiveManager @Inject constructor(
                     this@RcpBleReceiveManager.gatt = gatt
                 } else if (newState == BluetoothProfile.STATE_DISCONNECTED) {
                     coroutineScope.launch {
-                        data.emit(Resource.Success(data = RcpResult( 0, 0, 0,0, ConnectionState.Disconnected)))
+                        data.emit(Resource.Success(data = RcpResult( 0, 0, 0, ConnectionState.Disconnected)))
                     }
                     gatt.close()
                 }
@@ -132,12 +132,10 @@ class RcpBleReceiveManager @Inject constructor(
                         val frequency = value[0].toUByte()
                         val compresion = value[1].toInt()
                         val position = if(value[2].toInt()> 0) 1 else -1
-                        val refresco = value[3].toInt()
                         val frequencyResult = RcpResult(
                             frequency.toInt(),
                             compresion,
                             position,
-                            refresco,
                             ConnectionState.Connected
                         )
                         coroutineScope.launch {
