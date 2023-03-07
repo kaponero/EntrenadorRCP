@@ -47,7 +47,7 @@ object tiempo{
 object scores{
     var cpm:Long = 0
     var desplaza:Long = 0
-    var posicion:Long = 1
+    var posicion:Long = 0
     var contador:Int = 0
     var cantidad: Long = 0
 }
@@ -55,7 +55,7 @@ object scores{
 fun reset_scores(){
     scores.cpm = 0
     scores.desplaza = 0
-    scores.posicion = 1
+    scores.posicion = 0
     scores.contador = 0
     scores.cantidad = 0
 
@@ -77,18 +77,52 @@ fun calculo_frecuencia(cmp_value:Int){
 
 
 @Composable
-fun calculo_desplazamiento(des_value : Int){
-    val compresion_1 = remember { mutableStateOf(0) }
-    val compresion_2 = remember { mutableStateOf(0) }
+fun calculo_desplazamiento(compresion : Int){
+    val compresion_anterior1 = remember { mutableStateOf(0) }
+    val compresion_anterior2 = remember { mutableStateOf(0) }
 
-    if (compresion_2.value!=des_value){
-        if (compresion_2.value>compresion_1.value && compresion_2.value>des_value){
-            scores.desplaza+=compresion_2.value
+    if (compresion_anterior2.value!=compresion){
+        if (compresion_anterior2.value>compresion_anterior1.value && compresion_anterior2.value>compresion){
+            scores.desplaza+=compresion_anterior2.value
             scores.contador++
         }
-        compresion_1.value = compresion_2.value
-        compresion_2.value = des_value
+        compresion_anterior1.value = compresion_anterior2.value
+        compresion_anterior2.value = compresion
     }
+}
+
+@Composable
+fun calculo_posicion (valor: Int, compresion:Int): Boolean {
+    val posicion_manos = remember { mutableStateOf(false) }
+    val compresion_anterior = remember { mutableStateOf(0) }
+
+    val posicion_correcta = remember { mutableStateOf(0) }
+    val posicion_incorrecta = remember { mutableStateOf(0) }
+
+    if (compresion > compresion_anterior.value){
+        posicion_manos.value = valor == 1
+        if (posicion_manos.value)
+            posicion_correcta.value++
+        else
+            posicion_incorrecta.value++
+    }
+    compresion_anterior.value = compresion
+
+    if (posicion_correcta.value==0 && posicion_incorrecta.value==0)
+        scores.posicion = 0
+    else
+        scores.posicion = (posicion_correcta.value/(posicion_correcta.value + posicion_incorrecta.value)).toLong()*100
+    return posicion_manos.value
+}
+
+@Composable
+fun isIniciar(manos: Int): Boolean{
+    val manos_correctas = remember { mutableStateOf(false) }
+
+    if (manos == 1){
+        manos_correctas.value = true
+    }
+    return manos_correctas.value
 }
 
 //----------------------------------------------------------------------------------------------------------------------

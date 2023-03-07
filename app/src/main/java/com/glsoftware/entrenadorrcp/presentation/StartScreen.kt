@@ -221,7 +221,7 @@ fun StartScreen(navController: NavController,onBluetoothStateChanged:()->Unit){
                         )
                         Text(
                             //text = "${((scores.posicion.toFloat()) / (60 * tiempo.minutos + tiempo.segundos) * 100).roundToInt()}%",
-                            text = "10",
+                            text = "${scores.posicion}",
                             textAlign = TextAlign.Center,
                             style = MaterialTheme.typography.body2
                         )
