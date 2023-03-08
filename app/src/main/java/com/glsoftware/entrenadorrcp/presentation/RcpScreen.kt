@@ -15,6 +15,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.painterResource
@@ -101,7 +102,18 @@ fun RcpScreen(navController: NavController,
                 //.height(580.dp)
                 //.aspectRatio(1f)
                 .background(
-                    darkGray,
+                    brush = Brush.verticalGradient(
+                        listOf(
+                            darkGray.copy(1f),
+                            darkGray.copy(0.95f),
+                            darkGray.copy(0.80f),
+                            darkGray.copy(0.75f),
+                            darkGray.copy(0.65f),
+                            darkGray.copy(0.55f),
+                            darkGray.copy(0.40f),
+                            Red700.copy(0.35f),
+                        )
+                    ),
                     //RoundedCornerShape(10.dp)
                 ),
             verticalArrangement = Arrangement.Center,
@@ -120,7 +132,8 @@ fun RcpScreen(navController: NavController,
                     if (viewModel.initializingMessage != null) {
                         Text(
                             text = viewModel.initializingMessage!!,
-                            color = white_color
+                            style = MaterialTheme.typography.body1,
+                            color = white_color,
                         )
                         //timer()
                     }
@@ -140,7 +153,9 @@ fun RcpScreen(navController: NavController,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Text(
-                        text = viewModel.errorMessage!!
+                        text = viewModel.errorMessage!!,
+                        style = MaterialTheme.typography.body1,
+                        color = white_color
                     )
                     Button(
                         onClick = {
@@ -164,14 +179,15 @@ fun RcpScreen(navController: NavController,
                 {
                     Column(
                         modifier = Modifier
-                            .fillMaxWidth(),
+                            .fillMaxWidth(0.7f),
                         verticalArrangement = Arrangement.spacedBy(5.dp),
                         horizontalAlignment = Alignment.CenterHorizontally
                     ){
                         Text(
                             text = "Coloque las manos correctamente para comenzar",
                             color = white_color,
-                            style = MaterialTheme.typography.body1
+                            style = MaterialTheme.typography.h4,
+                            textAlign = TextAlign.Center
                         )
                     }
                 }
@@ -179,7 +195,7 @@ fun RcpScreen(navController: NavController,
                     Column(
                         modifier = Modifier
                             .fillMaxSize()
-                            .padding(0.dp, 15.dp),
+                            .padding(0.dp, AppTheme.dimens.large),
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.Top
                     ) {
@@ -193,7 +209,7 @@ fun RcpScreen(navController: NavController,
                         calculo_desplazamiento(viewModel.compresion)
 
                         if (bleConnectionState == ConnectionState.Connected) {
-                            Spacer(modifier = Modifier.height(10.dp))
+                            Spacer(modifier = Modifier.height(AppTheme.dimens.mano_size2/3))
                             Row(
                                 verticalAlignment = Alignment.CenterVertically
                             ) {
@@ -203,15 +219,15 @@ fun RcpScreen(navController: NavController,
                                     horizontalAlignment = Alignment.CenterHorizontally,
 
                                     ) {
-                                    Spacer(modifier = Modifier.height(30.dp))
+                                    Spacer(modifier = Modifier.height(AppTheme.dimens.mano_size2/2))
                                     ArcIndicator(
                                         modifier = Modifier
-                                            .size(250.dp),
+                                            .size(AppTheme.dimens.radio1),
                                         initialValue = viewModel.frequency,
                                         primaryColor = white,
                                         secondaryColor = Red200,
                                         terciaryColor = Red700,
-                                        circleRadius = 230f
+                                        circleRadius = AppTheme.dimens.radio1f
                                     )
                                 }
                                 Column(
@@ -221,23 +237,23 @@ fun RcpScreen(navController: NavController,
                                 ) {
                                     BarIndicator(
                                         modifier = Modifier
-                                            .size(250.dp),
+                                            .size(AppTheme.dimens.radio1),
                                         initialValue = viewModel.compresion,
                                         primaryColor = white,
                                         secondaryColor = Red200,
                                         terciaryColor = Red700,
-                                        circleRadius = 230f
+                                        circleRadius = AppTheme.dimens.radio1f
                                     )
                                 }
                             }
-                            Spacer(modifier = Modifier.height(10.dp))
+                            Spacer(modifier = Modifier.height(AppTheme.dimens.mano_size2/2))
 
                             if (calculo_posicion(viewModel.position, viewModel.compresion)) {
                                 Image(
                                     painter = painterResource(id = R.drawable.hand_ok),
                                     contentDescription = "mano ok",
                                     modifier = Modifier
-                                        .size(80.dp)
+                                        .size(AppTheme.dimens.mano_size1)
                                         .border(
                                             BorderStroke(4.dp, white),
                                             CircleShape
@@ -249,7 +265,7 @@ fun RcpScreen(navController: NavController,
                                     painter = painterResource(id = R.drawable.hand_no),
                                     contentDescription = "mano no",
                                     modifier = Modifier
-                                        .size(80.dp)
+                                        .size(AppTheme.dimens.mano_size1)
                                         .border(
                                             BorderStroke(4.dp, white),
                                             CircleShape
@@ -258,7 +274,7 @@ fun RcpScreen(navController: NavController,
                                 )
                             }
                             //calculo_desplazamiento(viewModel.compresion)
-                            Spacer(modifier = Modifier.height(80.dp))
+                            Spacer(modifier = Modifier.height(AppTheme.dimens.mano_size2))
                             Row() {
                                 /*Button(onClick = {
                                     reset_tiempo()

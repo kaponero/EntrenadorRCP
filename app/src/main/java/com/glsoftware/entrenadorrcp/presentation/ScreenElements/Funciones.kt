@@ -7,6 +7,8 @@ import com.glsoftware.entrenadorrcp.ui.theme.white
 //import com.glsoftware.entrenadorrcp.MainActivity.Companion.prefs
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
+import kotlin.math.pow
+import kotlin.math.sqrt
 
 @Composable
 fun rememberCountdownTimerState(
@@ -63,8 +65,8 @@ fun reset_scores(){
 
 fun reset_tiempo(){
 
-    tiempo.segundos = 1
-    tiempo.minutos = 1
+    tiempo.segundos = 0
+    tiempo.minutos = 0
 }
 @Composable
 fun calculo_frecuencia(cmp_value:Int){
@@ -100,7 +102,7 @@ fun calculo_posicion (valor: Int, compresion:Int): Boolean {
     val posicion_incorrecta = remember { mutableStateOf(0) }
 
     if (compresion > compresion_anterior.value){
-        posicion_manos.value = valor == 1
+        posicion_manos.value = valor != 0
         if (posicion_manos.value)
             posicion_correcta.value++
         else
@@ -113,6 +115,37 @@ fun calculo_posicion (valor: Int, compresion:Int): Boolean {
     else
         scores.posicion = (posicion_correcta.value/(posicion_correcta.value + posicion_incorrecta.value)).toLong()*100
     return posicion_manos.value
+}
+
+@Composable
+fun calculo_puntuación ():Int{
+
+    var desvio_estandar = 0f
+    if (scores.cantidad != 0L)
+        desvio_estandar = sqrt(((scores.cpm.toFloat()/scores.cantidad)-110).pow(2))
+    val puntaje_frecuencia = when{
+        desvio_estandar <= 10f -> 100
+        desvio_estandar in 11f..15f -> 90
+        desvio_estandar in 26f..30f -> 80
+        desvio_estandar in 31f..35f -> 70
+        desvio_estandar in 36f..40f -> 60
+        desvio_estandar in 41f..45f -> 50
+        desvio_estandar in 46f..50f -> 40
+        desvio_estandar in 51f..55f -> 30
+        desvio_estandar in 56f..60f -> 20
+        desvio_estandar in 61f..65f -> 10
+        else -> 0
+    }
+
+    var puntaje_desplazamiento = 0
+    if (scores.contador != 0)
+        puntaje_desplazamiento = (((scores.desplaza.toFloat())/scores.contador)*2).toInt()
+
+    val puntaje_posicion = scores.posicion.toInt()
+
+    var puntaje = (puntaje_frecuencia.toFloat()/100 * puntaje_posicion.toFloat()/100 * puntaje_desplazamiento.toFloat()/100)*100
+
+    return puntaje.toInt()
 }
 
 @Composable

@@ -13,6 +13,7 @@ data class Dimensions(
     val radio2:Dp,
     val radio1f:Float,
     val radio2f:Float,
+    val mano_size1:Dp,
     val mano_size2:Dp,
 )
 
@@ -26,6 +27,7 @@ val smallDimensions = Dimensions(
     radio2 = 100.dp,
     radio1f = 220f,
     radio2f = 92f,
+    mano_size1 = 80.dp,
     mano_size2 = 60.dp
 )
 
@@ -39,6 +41,7 @@ val compactDimensions = Dimensions(
     radio2 = 115.dp,
     radio1f = 180f,
     radio2f = 72f,
+    mano_size1 = 90.dp,
     mano_size2 = 70.dp
 )
 
@@ -52,6 +55,7 @@ val mediumDimensions = Dimensions(
     radio2 = 130.dp,
     radio1f = 150f,
     radio2f = 52f,
+    mano_size1 = 100.dp,
     mano_size2 = 80.dp
 
 )
@@ -66,6 +70,7 @@ val largeDimensions = Dimensions(
     radio2 = 150.dp,
     radio1f = 120f,
     radio2f = 32f,
+    mano_size1 = 110.dp,
     mano_size2 = 90.dp
 )
 
@@ -79,5 +84,6 @@ val xlargeDimensions = Dimensions(
     radio2 = 170.dp,
     radio1f = 100f,
     radio2f = 22f,
+    mano_size1 = 110.dp,
     mano_size2 = 90.dp
 )

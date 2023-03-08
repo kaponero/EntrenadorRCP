@@ -29,6 +29,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.glsoftware.entrenadorrcp.MainActivity.Companion.prefs
 import com.glsoftware.entrenadorrcp.R
+import com.glsoftware.entrenadorrcp.presentation.ScreenElements.calculo_puntuación
 import com.glsoftware.entrenadorrcp.presentation.ScreenElements.scores
 import com.glsoftware.entrenadorrcp.presentation.ScreenElements.tiempo
 import com.glsoftware.entrenadorrcp.presentation.permissions.SystemBroadcastReceiver
@@ -60,7 +61,7 @@ fun StartScreen(navController: NavController,onBluetoothStateChanged:()->Unit){
         dividendo = 1
     }
 
-    var puntaje = 100//calcular_puntuacion(dividendo)
+    var puntaje = calculo_puntuación()
 
     if(AppTheme.orientation == Orientation.Portrait) {
         MainScreen(navController,onBluetoothStateChanged)
