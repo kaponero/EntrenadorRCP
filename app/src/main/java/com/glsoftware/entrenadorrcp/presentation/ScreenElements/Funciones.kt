@@ -102,7 +102,8 @@ fun calculo_posicion (valor: Int, compresion:Int): Boolean {
     val posicion_incorrecta = remember { mutableStateOf(0) }
 
     if (compresion > compresion_anterior.value){
-        posicion_manos.value = valor != 0
+        posicion_manos.value = valor == 1
+        //posicion_manos.value = valor == 1
         if (posicion_manos.value)
             posicion_correcta.value++
         else
