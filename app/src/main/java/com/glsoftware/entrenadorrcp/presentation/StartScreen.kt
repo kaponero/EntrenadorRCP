@@ -63,392 +63,202 @@ fun StartScreen(navController: NavController,onBluetoothStateChanged:()->Unit){
 
     var puntaje = calculo_puntuación()
 
-    if(AppTheme.orientation == Orientation.Portrait) {
-        MainScreen(navController,onBluetoothStateChanged)
-        Column(modifier = Modifier.fillMaxSize()) {
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(
-                        brush = Brush.verticalGradient(
-                            listOf(
-                                Red500.copy(1f),
-                                white.copy(0.15f)
-                            )
-                        ),)
-                    .weight(1f),
-            ) {
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize(),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-
-                    ) {
-                    Text(
-                        text = "Puntuación",
-                        style = MaterialTheme.typography.h2,
-                        modifier = Modifier
-                            .padding(AppTheme.dimens.medium),
-                        color = white_color
-                    )
-                    Spacer(modifier = Modifier.height(AppTheme.dimens.large))
-                    CircularIndicator(
-                        modifier = Modifier
-                            .size(AppTheme.dimens.radio1),
-                        initialValue = puntaje,
-                        primaryColor = white,
-                        secondaryColor = Red200,
-                        circleRadius = AppTheme.dimens.radio1f
-                    )
-                }
-            }
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .weight(1f)
-            )
-        }
-
-        Column(
+    MainScreen(navController,onBluetoothStateChanged)
+    Column(modifier = Modifier.fillMaxSize()) {
+        Box(
             modifier = Modifier
-                .fillMaxWidth()
-                .fillMaxHeight(0.8f),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
-        ) {
-            Spacer(modifier = Modifier.height(AppTheme.dimens.large*17))
-            Card(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(AppTheme.dimens.large),
-                elevation = 10.dp,
-
-                ) {
-                Row(
-                    modifier = Modifier
-                        .padding(AppTheme.dimens.large),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceEvenly
-                ) {
-                    Column(
-                        modifier = Modifier,
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        Text(
-                            text = "Tiempo",
-                            textAlign = TextAlign.Center,
-                            style = MaterialTheme.typography.body1
-                        )
-                        Spacer(modifier = Modifier.height(AppTheme.dimens.medium))
-                        Image(
-                            painter = painterResource(id = R.drawable.timelapse),
-                            contentDescription = "tiempo de entrenamiento",
-                        )
-                    }
-                    Text(
-                        text = "${
-                            if (tiempo.minutos > 9) {
-                                tiempo.minutos
-                            } else {
-                                "0" + tiempo.minutos
-                            }
-                        } : ${
-                            if (tiempo.segundos > 9) {
-                                tiempo.segundos
-                            } else {
-                                "0" + tiempo.segundos
-                            }
-                        } minutos",
-                        textAlign = TextAlign.Center,
-                        style = MaterialTheme.typography.h5
-                    )
-                }
-            }
-            Spacer(modifier = Modifier.height(AppTheme.dimens.small))
-            Card(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(AppTheme.dimens.large),
-                elevation = 10.dp,
-            ) {
-                Row(
-                    modifier = Modifier
-                        .padding(AppTheme.dimens.large),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceEvenly
-                ) {
-                    Column(
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        Text(
-                            text = "Comp. por Min.",
-                            textAlign = TextAlign.Center,
-                            style = MaterialTheme.typography.body1
-                        )
-                        Image(
-                            painter = painterResource(id = R.drawable.lat_minute),
-                            contentDescription = "compresiones por minuto",
-                            modifier = Modifier.padding(AppTheme.dimens.medium, AppTheme.dimens.medium)
-                        )
-                        Text(
-                            text = "${
-                                if (scores.cantidad==0L) { 
-                                    0
-                                }
-                                else { 
-                                    (scores.cpm.toFloat()/scores.cantidad).roundToInt()
-                                }
-                            }",
-                            //text = "${((scores.cpm.toFloat())/(60*tiempo.minutos + tiempo.segundos)*100).roundToInt()}%",
-                            textAlign = TextAlign.Center,
-                            style = MaterialTheme.typography.body2
-                        )
-                    }
-
-                    Column(
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    )
-                    {
-                        Text(
-                            text = "Posición",
-                            textAlign = TextAlign.Center,
-                            //color= gray,
-                            style = MaterialTheme.typography.body1
-                        )
-                        Image(
-                            painter = painterResource(id = R.drawable.hand_pos),
-                            contentDescription = "posicion de la mano",
-                            modifier = Modifier.padding(AppTheme.dimens.medium, AppTheme.dimens.medium),
-                        )
-                        Text(
-                            //text = "${((scores.posicion.toFloat()) / (60 * tiempo.minutos + tiempo.segundos) * 100).roundToInt()}%",
-                            text = "${scores.posicion}",
-                            textAlign = TextAlign.Center,
-                            style = MaterialTheme.typography.body2
-                        )
-                    }
-
-                    Column(
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        Text(
-                            text = "Desplazamiento",
-                            textAlign = TextAlign.Center,
-                            style = MaterialTheme.typography.body1
-                        )
-                        Image(
-                            painter = painterResource(id = R.drawable.compresion),
-                            contentDescription = "compresiones",
-                            modifier = Modifier
-                                .rotate(90f)
-                                .padding(AppTheme.dimens.medium,AppTheme.dimens.medium)
-                        )
-                        Text(
-                            //text = "${(((scores.desplaza.toFloat()) / dividendo) * 2).roundToInt()}%",
-                            text = "${
-                                if (scores.contador==0){
-                                    0
-                                }
-                                else{
-                                    (((scores.desplaza.toFloat()) / scores.contador) * 2).roundToInt()
-                                }
-                            }%",
-                            textAlign = TextAlign.Center,
-                            style = MaterialTheme.typography.body2
-                        )
-                    }
-                }
-            }
-        }
-    }
-    /*else{
-        Column (modifier = Modifier.fillMaxSize()){
-            Row(modifier = Modifier
                 .fillMaxSize()
-            ){
-                Box(
+                .background(
+                    brush = Brush.verticalGradient(
+                        listOf(
+                            Red500.copy(1f),
+                            white.copy(0.15f)
+                        )
+                    ),)
+                .weight(1f),
+        ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize(),
+                horizontalAlignment = Alignment.CenterHorizontally,
+
+                ) {
+                Text(
+                    text = "Puntuación",
+                    style = MaterialTheme.typography.h2,
                     modifier = Modifier
-                        .fillMaxSize()
-                        .background(brush = Brush.verticalGradient(
-                            listOf(
-                                Red500.copy(1f),
-                                white.copy(0.20f)
-                            )
-                        ))
+                        .padding(AppTheme.dimens.medium),
+                    color = white_color
                 )
-            }
-        }
-        Column (
-            modifier = Modifier
-                .fillMaxWidth()
-                .fillMaxHeight(),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.SpaceBetween
-        ){
-            Text(
-                text = "Puntuación",
-                style = MaterialTheme.typography.h2,
-                modifier = Modifier
-                    .padding(AppTheme.dimens.medium),
-                color = white_color,
-            )
-            Spacer(modifier = Modifier.height(AppTheme.dimens.small))
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceEvenly,
-                verticalAlignment = Alignment.CenterVertically
-                )
-            {
+                Spacer(modifier = Modifier.height(AppTheme.dimens.large))
                 CircularIndicator(
                     modifier = Modifier
-                        .size(AppTheme.dimens.large*13),
+                        .size(AppTheme.dimens.radio1),
                     initialValue = puntaje,
                     primaryColor = white,
                     secondaryColor = Red200,
-                    circleRadius = 400f/(AppTheme.dimens.small/1.dp)
+                    circleRadius = AppTheme.dimens.radio1f
                 )
+            }
+        }
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .weight(1f)
+        )
+    }
+
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .fillMaxHeight(0.8f),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+        Spacer(modifier = Modifier.height(AppTheme.dimens.large*17))
+        Card(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(AppTheme.dimens.large),
+            elevation = 10.dp,
+
+            ) {
+            Row(
+                modifier = Modifier
+                    .padding(AppTheme.dimens.large),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceEvenly
+            ) {
                 Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .fillMaxHeight(0.8f),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.Center
+                    modifier = Modifier,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text(
+                        text = "Tiempo",
+                        textAlign = TextAlign.Center,
+                        style = MaterialTheme.typography.body1
+                    )
+                    Spacer(modifier = Modifier.height(AppTheme.dimens.medium))
+                    Image(
+                        painter = painterResource(id = R.drawable.timelapse),
+                        contentDescription = "tiempo de entrenamiento",
+                    )
+                }
+                Text(
+                    text = "${
+                        if (tiempo.minutos > 9) {
+                            tiempo.minutos
+                        } else {
+                            "0" + tiempo.minutos
+                        }
+                    } : ${
+                        if (tiempo.segundos > 9) {
+                            tiempo.segundos
+                        } else {
+                            "0" + tiempo.segundos
+                        }
+                    } minutos",
+                    textAlign = TextAlign.Center,
+                    style = MaterialTheme.typography.h5
+                )
+            }
+        }
+        Spacer(modifier = Modifier.height(AppTheme.dimens.small))
+        Card(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(AppTheme.dimens.large),
+            elevation = 10.dp,
+        ) {
+            Row(
+                modifier = Modifier
+                    .padding(AppTheme.dimens.large),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceEvenly
+            ) {
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text(
+                        text = "Comp. por Min.",
+                        textAlign = TextAlign.Center,
+                        style = MaterialTheme.typography.body1
+                    )
+                    Image(
+                        painter = painterResource(id = R.drawable.lat_minute),
+                        contentDescription = "compresiones por minuto",
+                        modifier = Modifier.padding(AppTheme.dimens.medium, AppTheme.dimens.medium)
+                    )
+                    Text(
+                        text = "${
+                            if (scores.cantidad==0L) { 
+                                0
+                            }
+                            else { 
+                                (scores.cpm.toFloat()/scores.cantidad).roundToInt()
+                            }
+                        }",
+                        //text = "${((scores.cpm.toFloat())/(60*tiempo.minutos + tiempo.segundos)*100).roundToInt()}%",
+                        textAlign = TextAlign.Center,
+                        style = MaterialTheme.typography.body2
+                    )
+                }
+
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally
                 )
                 {
-                    Card(
+                    Text(
+                        text = "Posición",
+                        textAlign = TextAlign.Center,
+                        //color= gray,
+                        style = MaterialTheme.typography.body1
+                    )
+                    Image(
+                        painter = painterResource(id = R.drawable.hand_pos),
+                        contentDescription = "posicion de la mano",
+                        modifier = Modifier.padding(AppTheme.dimens.medium, AppTheme.dimens.medium),
+                    )
+                    Text(
+                        //text = "${((scores.posicion.toFloat()) / (60 * tiempo.minutos + tiempo.segundos) * 100).roundToInt()}%",
+                        text = "${scores.posicion}",
+                        textAlign = TextAlign.Center,
+                        style = MaterialTheme.typography.body2
+                    )
+                }
+
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text(
+                        text = "Desplazamiento",
+                        textAlign = TextAlign.Center,
+                        style = MaterialTheme.typography.body1
+                    )
+                    Image(
+                        painter = painterResource(id = R.drawable.compresion),
+                        contentDescription = "compresiones",
                         modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(AppTheme.dimens.medium),
-                        elevation = 10.dp,
-                        )
-                    {
-
-                        Row(
-                            modifier = Modifier
-                                .padding(AppTheme.dimens.large),
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.SpaceEvenly
-                        ) {
-                            Column(
-                                modifier = Modifier,
-                                horizontalAlignment = Alignment.CenterHorizontally
-                            ) {
-                                Text(
-                                    text = "Tiempo",
-                                    textAlign = TextAlign.Center,
-                                    style = MaterialTheme.typography.body1
-                                )
-                                Spacer(modifier = Modifier.height(AppTheme.dimens.medium))
-                                Image(
-                                    painter = painterResource(id = R.drawable.timelapse),
-                                    contentDescription = "tiempo de entrenamiento"
-                                )
+                            .rotate(90f)
+                            .padding(AppTheme.dimens.medium,AppTheme.dimens.medium)
+                    )
+                    Text(
+                        //text = "${(((scores.desplaza.toFloat()) / dividendo) * 2).roundToInt()}%",
+                        text = "${
+                            if (scores.contador==0){
+                                0
                             }
-                            Text(
-                                text = "${
-                                    if (tiempo.minutos > 9) {
-                                        tiempo.minutos
-                                    } else {
-                                        "0" + tiempo.minutos
-                                    }
-                                } : ${
-                                    if (tiempo.segundos > 9) {
-                                        tiempo.segundos
-                                    } else {
-                                        "0" + tiempo.segundos
-                                    }
-                                } minutos",
-                                textAlign = TextAlign.Center,
-                                style = MaterialTheme.typography.h5
-                            )
-                        }
-                    }
-                    Spacer(modifier = Modifier.height(AppTheme.dimens.small))
-                    Card(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(AppTheme.dimens.medium),
-                        elevation = 10.dp,
-                    ) {
-                        Row(
-                            modifier = Modifier
-                                .padding(AppTheme.dimens.large),
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.SpaceEvenly
-                        ) {
-                            Column(
-                                horizontalAlignment = Alignment.CenterHorizontally
-                            ) {
-                                Text(
-                                    text = "Comp. por Min.",
-                                    textAlign = TextAlign.Center,
-                                    style = MaterialTheme.typography.body1
-                                )
-                                Image(
-                                    painter = painterResource(id = R.drawable.lat_minute),
-                                    contentDescription = "compresiones por minuto",
-                                    modifier = Modifier.padding(AppTheme.dimens.medium, AppTheme.dimens.medium)
-                                )
-                                Text(
-                                    text = "${(scores.cpm.toFloat() / scores.cantidad).roundToInt()}",
-                                    //text = "${((scores.cpm.toFloat())/(60*tiempo.minutos + tiempo.segundos)*100).roundToInt()}%",
-                                    textAlign = TextAlign.Center,
-                                    style = MaterialTheme.typography.body2
-                                )
+                            else{
+                                (((scores.desplaza.toFloat()) / scores.contador) * 2).roundToInt()
                             }
-
-                            Column(
-                                horizontalAlignment = Alignment.CenterHorizontally
-                            )
-                            {
-                                Text(
-                                    text = "Posición",
-                                    textAlign = TextAlign.Center,
-                                    //color= gray,
-                                    style = MaterialTheme.typography.body1
-                                )
-                                Image(
-                                    painter = painterResource(id = R.drawable.hand_pos),
-                                    contentDescription = "posicion de la mano",
-                                    modifier = Modifier.padding(AppTheme.dimens.medium, AppTheme.dimens.medium),
-                                )
-                                Text(
-                                    text = "${((scores.posicion.toFloat()) / (60 * tiempo.minutos + tiempo.segundos) * 100).roundToInt()}%",
-                                    textAlign = TextAlign.Center,
-                                    style = MaterialTheme.typography.body2
-                                )
-                            }
-
-                            Column(
-                                horizontalAlignment = Alignment.CenterHorizontally
-                            ) {
-                                Text(
-                                    text = "Desplazamiento",
-                                    textAlign = TextAlign.Center,
-                                    style = MaterialTheme.typography.body1
-                                )
-                                Image(
-                                    painter = painterResource(id = R.drawable.compresion),
-                                    contentDescription = "compresiones",
-                                    modifier = Modifier
-                                        .rotate(90f)
-                                        .padding(AppTheme.dimens.medium,AppTheme.dimens.medium)
-                                )
-                                Text(
-                                    text = "${(((scores.desplaza.toFloat()) / dividendo) * 2).roundToInt()}%",
-                                    textAlign = TextAlign.Center,
-                                    style = MaterialTheme.typography.body2
-                                )
-                            }
-                        }
-                    }
+                        }%",
+                        textAlign = TextAlign.Center,
+                        style = MaterialTheme.typography.body2
+                    )
                 }
             }
-            MainScreen(navController,onBluetoothStateChanged)
         }
     }
-    */
 }
 
 @Composable

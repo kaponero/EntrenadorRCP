@@ -51,7 +51,7 @@ class MainActivity : ComponentActivity() {
             }
         }
 
-        //setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
 
     }
 

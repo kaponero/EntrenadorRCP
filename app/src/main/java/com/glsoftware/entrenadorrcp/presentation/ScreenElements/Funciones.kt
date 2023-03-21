@@ -103,7 +103,6 @@ fun calculo_posicion (valor: Int, compresion:Int): Boolean {
 
     if (compresion > compresion_anterior.value){
         posicion_manos.value = valor == 1
-        //posicion_manos.value = valor == 1
         if (posicion_manos.value)
             posicion_correcta.value++
         else
@@ -114,7 +113,7 @@ fun calculo_posicion (valor: Int, compresion:Int): Boolean {
     if (posicion_correcta.value==0 && posicion_incorrecta.value==0)
         scores.posicion = 0
     else
-        scores.posicion = (posicion_correcta.value/(posicion_correcta.value + posicion_incorrecta.value)).toLong()*100
+        scores.posicion = ((posicion_correcta.value.toFloat()/(posicion_correcta.value + posicion_incorrecta.value))*100).toLong()
     return posicion_manos.value
 }
 
@@ -124,17 +123,33 @@ fun calculo_puntuación ():Int{
     var desvio_estandar = 0f
     if (scores.cantidad != 0L)
         desvio_estandar = sqrt(((scores.cpm.toFloat()/scores.cantidad)-110).pow(2))
+
+    //val puntaje_frecuencia = 100 - ((100/110) * desvio_estandar)
+
     val puntaje_frecuencia = when{
         desvio_estandar <= 10f -> 100
         desvio_estandar in 11f..15f -> 90
-        desvio_estandar in 26f..30f -> 80
-        desvio_estandar in 31f..35f -> 70
-        desvio_estandar in 36f..40f -> 60
-        desvio_estandar in 41f..45f -> 50
-        desvio_estandar in 46f..50f -> 40
-        desvio_estandar in 51f..55f -> 30
-        desvio_estandar in 56f..60f -> 20
-        desvio_estandar in 61f..65f -> 10
+        desvio_estandar in 15f..20f -> 85
+        desvio_estandar in 20f..25f -> 85
+        desvio_estandar in 25f..30f -> 85
+        desvio_estandar in 30f..35f -> 80
+        desvio_estandar in 35f..40f -> 75
+        desvio_estandar in 40f..45f -> 70
+        desvio_estandar in 45f..50f -> 65
+        desvio_estandar in 50f..55f -> 60
+        desvio_estandar in 55f..60f -> 55
+        desvio_estandar in 60f..65f -> 50
+        desvio_estandar in 65f..70f -> 45
+        desvio_estandar in 70f..75f -> 40
+        desvio_estandar in 75f..80f -> 35
+        desvio_estandar in 80f..85f -> 30
+        desvio_estandar in 85f..90f -> 25
+        desvio_estandar in 90f..95f -> 20
+        desvio_estandar in 95f..100f -> 15
+        desvio_estandar in 100f..105f -> 10
+        desvio_estandar in 105f..110f -> 5
+
+
         else -> 0
     }
 
